@@ -44,7 +44,7 @@ public class RegistrationApi {
 
 
     //need fix Auth error
-    @GetMapping("/currentUser")
+ /*   @GetMapping("/currentUser")
     public User getCurrentUser(){
         User currentUser;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -55,4 +55,5 @@ public class RegistrationApi {
         }
         return  currentUser;
     }
+ */
 }

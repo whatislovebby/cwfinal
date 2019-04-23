@@ -7,6 +7,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -25,12 +27,15 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(unique = true)
+    @NotBlank
     private String username;
 
+    @NotBlank
     private String password;
 
   //  private String email;
 
+    @NotBlank
     private String role;
 
     private String fullName;
