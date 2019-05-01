@@ -8,6 +8,8 @@ import com.bsuir.course.util.CustomErrorType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -37,23 +39,13 @@ public class RegistrationApi {
     // this is the login api/service
     @GetMapping("/login")
     public Principal user(Principal principal) {
-
         return principal;
-    //  return (User) this.userService.loadUserByUsername(principal.getName());
+    }
+
+    @PostMapping("/updateUser")
+    public User updateUser(@RequestBody User user){
+        return userService.update(user);
     }
 
 
-    //need fix Auth error
- /*   @GetMapping("/currentUser")
-    public User getCurrentUser(){
-        User currentUser;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            currentUser = (User)this.userService.loadUserByUsername(((UserDetails)principal).getUsername());
-        } else {
-            currentUser = (User)this.userService.loadUserByUsername(principal.toString());
-        }
-        return  currentUser;
-    }
- */
 }

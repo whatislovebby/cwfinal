@@ -1,7 +1,8 @@
-package com.bsuir.course.domain;
+package com.bsuir.course.domain.sale;
 
+import com.bsuir.course.domain.User;
+import com.bsuir.course.domain.rent.AddressForRent;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,8 +13,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="apartment")
-public class Apartment {
+@Table(name="apartment_for_sale")
+public class ApartmentForSale {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -25,15 +26,22 @@ public class Apartment {
     @Column(name="description", columnDefinition="TEXT")
     private String description;
 
-    private String area;
-
-    private Float price;
-
     private Integer roomCount;
 
     private Integer floor;
 
     private Integer maxFloor;
 
+    private Float price;
+
     private Integer visitorsCount;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "address")
+    private AddressForSale address;
+
+    @ManyToOne()
+    @JoinColumn(name = "user")
+    private User user;
 }
+

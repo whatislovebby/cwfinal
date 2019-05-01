@@ -33,12 +33,16 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
-  //  private String email;
+    private String firstName;
+
+    private String lastName;
+
+    private String phone;
+
+    private String email;
 
     @NotBlank
     private String role;
-
-    private String fullName;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
