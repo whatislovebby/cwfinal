@@ -1,0 +1,318 @@
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<head xmlns:sec="http://www.w3.org/1999/xhtml"></head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1251" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+        integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+        integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+        crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat Alternates' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users List</title>
+    <style>
+        /* Add general styles here */
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: 'Roboto';
+            font-size: 16px;
+            line-height: 1.5;
+
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+        }
+
+        .container{
+            display: flex;
+
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td:last-child {
+            text-align: left;
+        }
+
+        /*
+        td:last-child button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        td:last-child button.edit {
+            background-color: #2196F3;
+        }
+
+        td:last-child button:hover {
+            opacity: 0.8;
+        }
+        */
+
+        /* Add styles for smaller screens here */
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            th, td {
+                display: block;
+                width: 100%;
+            }
+
+            th {
+                text-align: center;
+            }
+
+            td:last-child {
+                text-align: left;
+            }
+
+            td:last-child button {
+                display: block;
+                margin: 10px auto 0;
+            }
+        }
+
+        input[type="text"], input[type="email"], input[type="submit"], input[type="file"], input[type="button"] {
+            font-size: 20px;
+        }
+
+        input[type="submit"] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+
+
+        .search-contain {
+            margin-bottom: 3%;
+            display: grid;
+            justify-content: center;
+        }
+
+        .search-contain button[type='submit'] {
+            color: #fff;
+            background-color: #45525b;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            list-style-type: none;
+            /* font-weight: bold;*/
+
+            border: 1px solid #45525b;
+            border-radius: 20px;
+            font-size: 16px;
+            padding: 10px 75px;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 50px;
+            background: #cccccc;
+            color: white;
+        }
+        /*.frame-1 {*/
+        /*    background-color: var(--white);*/
+        /*    display: flex;*/
+        /*    flex-direction: column;*/
+        /*    align-items: flex-start;*/
+        /*}*/
+
+        /*.flex-wrapper-one {*/
+        /*    background-color: var(--gainsboro);*/
+        /*    margin-bottom: 10px;*/
+        /*    padding: 21px 120px 22px 90px;*/
+        /*    display: flex;*/
+        /*    align-items: flex-start;*/
+        /*}*/
+        /*.logo {*/
+        /*    margin-right: 402px;*/
+        /*    display: flex;*/
+        /*    align-items: flex-start;*/
+        /*}*/
+
+        /*.arenda-by {*/
+        /*    color: var(--black);*/
+        /*    margin-top: 22px;*/
+        /*    font-family: var(--roboto-30-bold-family);*/
+        /*    font-size: var(--roboto-30-bold-size);*/
+        /*    font-weight: var(--roboto-30-bold-weight);*/
+        /*    line-height: var(--roboto-30-bold-line-height);*/
+        /*}*/
+
+        nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        nav li {
+            border-bottom: none;
+            margin-right: 100px;
+            list-style-type: none;
+        }
+
+        nav a {
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: #ffffff;
+            background-color: #252525;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #cccccc;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<header>
+
+    <div class="logo">
+        <img
+                alt=""
+                class="combined-shape"
+                src="https://static.overlay-tech.com/assets/1f3c4412-c1f8-45a4-a11d-7e779f5d67f5.svg"
+        />
+        <a th:href="@{/}"><p class="arenda-by">Arenda.by</p></a>
+    </div>
+<!--    <div class="title-back"><h1>Arenda</h1></div>-->
+<!--<div class="frame-1">-->
+<!--    <div class="flex-wrapper-one">-->
+<!--        <div class="logo">-->
+<!--            <img-->
+<!--                    alt=""-->
+<!--                    class="combined-shape"-->
+<!--                    src="https://static.overlay-tech.com/assets/1f3c4412-c1f8-45a4-a11d-7e779f5d67f5.svg"-->
+<!--            />-->
+<!--            <a th:href="@{/}"><p class="arenda-by">Arenda.by</p></a>-->
+<!--        </div>-->
+
+
+    <div sec:authorize="isAuthenticated()" class="text-center p-3">
+
+        <nav>
+            <ul>
+                <li><a th:href="@{/personal}">Личный кабинет</a></li>
+                <li>
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Выйти" class="logout"/>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+    <div sec:authorize="!isAuthenticated()" class="text-center p-3">
+        <nav>
+            <ul>
+             <!--   <li><a th:href="@{/login}">Войти</a></li>-->
+            </ul>
+        </nav>
+    </div>
+
+
+`</header>`
+<h1>Пользователи</h1>
+
+<div class="container">
+
+
+<div class="search-contain">
+    <a th:href="@{/admin/personal}"><input type="button" class="btn btn-dark mt-3"  value="Назад"></a>
+</div>
+
+
+<table id="myTable">
+    <thead>
+    <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Телефон</th>
+        <th>Email</th>
+        <th>Статус</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user:${users}">
+        <td><span th:text="${user.getFirstName()}"></span></td>
+        <td><span th:text="${user.getLastName()}"></span></td>
+        <td><span th:text="${user.getPhone()}"></span></td>
+        <td><span th:text="${user.getEmail()}"></span></td>
+        <td><span th:text="${user.isEnabled()}"></span></td>
+        <td>
+            <form th:action="@{/admin/deleteUser}" method="post">
+                <input type="submit" class="delete" name="userEmail" th:value="${user.getEmail()}">Удалить</input>
+            </form>
+            <div th:if="${!user.isEnabled()}">
+                <form th:action="@{/admin/blockUser}" method="post">
+                    <input type="submit" class="delete" name="UserEmail"
+                           th:value="${user.getEmail()}">Заблокировать</input>
+                </form>
+            </div>
+            <div th:if="${user.isEnabled()}">
+                <form th:action="@{/admin/unblockUser}" method="post">
+                    <input type="submit" class="delete" name="UserEmail"
+                           th:value="${user.getEmail()}">Разблокировать</input>
+                </form>
+            </div>
+
+        </td>
+    </tr>
+    <!-- Add more rows here -->
+    </tbody>
+</table>
+</div>
+
+
+</body>
+</html>

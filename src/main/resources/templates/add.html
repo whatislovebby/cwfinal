@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/js/common_form.js}" ></script>
+    <title>Добавить объявление</title>
+    <style>
+        /* This is the project stylesheet */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        :root {
+            /* Colors */
+            --black: rgba(0, 0, 0, 1);
+            --dark-slate-gray: rgba(69, 82, 91, 1);
+            --gainsboro: rgba(217, 217, 217, 1);
+            --white: rgba(255, 255, 255, 1);
+
+            /* Typographies */
+            /* roboto-20-bold */
+            --roboto-20-bold-family: "Roboto";
+            --roboto-20-bold-size: 20px;
+            --roboto-20-bold-weight: 700;
+            --roboto-20-bold-line-height: normal;
+
+            /* roboto-20-regular */
+            --roboto-20-regular-family: "Roboto";
+            --roboto-20-regular-size: 20px;
+            --roboto-20-regular-weight: 400;
+            --roboto-20-regular-line-height: normal;
+
+            /* roboto-30-bold */
+            --roboto-30-bold-family: "Roboto";
+            --roboto-30-bold-size: 30px;
+            --roboto-30-bold-weight: 700;
+            --roboto-30-bold-line-height: normal;
+
+            /* roboto-30-regular */
+            --roboto-30-regular-family: "Roboto";
+            --roboto-30-regular-size: 30px;
+            --roboto-30-regular-weight: 400;
+            --roboto-30-regular-line-height: normal;
+        }
+
+        .frame-1 {
+            background-color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .flex-wrapper-one {
+            background-color: var(--gainsboro);
+            margin-bottom: 10px;
+            padding: 21px 120px 22px 90px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .logo {
+            margin-right: 402px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .arenda-by {
+            color: var(--black);
+            margin-top: 22px;
+            font-family: var(--roboto-30-bold-family);
+            font-size: var(--roboto-30-bold-size);
+            font-weight: var(--roboto-30-bold-weight);
+            line-height: var(--roboto-30-bold-line-height);
+        }
+
+        .arenda {
+            color: var(--dark-slate-gray);
+            margin-top: 33px;
+            margin-right: 60px;
+            font-family: var(--roboto-20-regular-family);
+            font-size: var(--roboto-20-regular-size);
+            font-weight: var(--roboto-20-regular-weight);
+            line-height: var(--roboto-20-regular-line-height);
+        }
+
+        .prodazha {
+            color: var(--dark-slate-gray);
+            margin-top: 34px;
+            margin-right: 60px;
+            font-family: var(--roboto-20-regular-family);
+            font-size: var(--roboto-20-regular-size);
+            font-weight: var(--roboto-20-regular-weight);
+            line-height: var(--roboto-20-regular-line-height);
+        }
+
+        .vojti {
+            color: var(--dark-slate-gray);
+            margin-top: 34px;
+            font-family: var(--roboto-20-bold-family);
+            font-size: var(--roboto-20-bold-size);
+            font-weight: var(--roboto-20-bold-weight);
+            line-height: var(--roboto-20-bold-line-height);
+        }
+
+        .group-1 {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .flex-wrapper-two {
+            margin-bottom: 55px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .img {
+            width: 68.37%;
+            height: 96.45%;
+            margin-top: 18px;
+            margin-right: 84px;
+        }
+
+        .form-container {
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+
+
+        input[type="text"], input[type="number"], input[type="submit"] {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        input[type="radio"] {
+            margin-bottom: 12px;
+        }
+
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+
+        textarea[type="text"] {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="frame-1">
+    <div class="flex-wrapper-one">
+        <div class="logo">
+            <img
+                    alt=""
+                    class="combined-shape"
+                    src="https://static.overlay-tech.com/assets/fbc06dfa-8a1f-4ea6-87a9-9b1103a9bc08.svg"
+            />
+            <a th:href="@{/}"><p class="arenda-by">Arenda.by</p></a>
+        </div>
+        <a th:href="@{/rent}"><p class="arenda">Аренда</p></a>
+        <a th:href="@{/sale}"><p class="prodazha">Продажа</p></a>
+        <a th:href="@{/account/add}"><p class="prodazha" style="color: #252525; font-weight: bold">Разместить объявление</p></a>
+        <a th:href="@{/account/personal}"><p class="vojti">Личный кабинет</p></a>
+    </div>
+
+
+    <!--  <div class="form-container">-->
+    <section class="form-container">
+
+        <form th:action="@{/account/add}" th:object="${apartaments}" method="post" enctype="multipart/form-data">
+
+            <label for="type">Тип:
+                <label id="type">
+                    <input type="radio" th:field="*{type}" value="Аренда" checked="checked"/>Аренда
+                    <input type="radio" th:field="*{type}" value="Продажа"/>Продажа
+                </label>
+            </label>
+            <br>
+            <label for="city">Город:</label>
+            <input type="text" id="city" th:field="*{city}" placeholder="Город">
+
+            <label for="street">Улица:</label>
+            <input type="text" id="street" th:field="*{street}" placeholder="Улица">
+
+            <label for="home">Дом:</label>
+            <input type="text" id="home" th:field="*{home}" placeholder="Дом">
+
+            <label for="flat">Квартира:</label>
+            <input type="number" id="flat" th:field="*{flat}" placeholder="Квартира">
+
+            <label for="price">Цена,$:</label>
+            <input type="number" id="price" th:field="*{price}" placeholder="Цена">
+
+            <label for="description">Описание:</label>
+            <textarea type="text" id="description" th:field="*{description}" placeholder="Описание"></textarea>
+
+            <label class="col-sm-4 col-form-label">Фото:</label>
+
+            <input type="hidden" th:field="*{photos}"/>
+            <input type="file" id="fileImage" name="image" accept="image/png, image/jpeg">
+            <img id="thumbnail" alt="Превью фото" th:src="@{${apartaments.photosImagePath}}" class="img-fluid"/>
+
+            <input type="submit" value="Разместить">
+        </form>
+
+    </section>
+</div>
+
+</body>
+</html>

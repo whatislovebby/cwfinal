@@ -1,6 +1,7 @@
 package com.bsuir.course.service;
 
 
+import com.bsuir.course.domain.Role;
 import com.bsuir.course.domain.User;
 import com.bsuir.course.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -20,8 +24,12 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     public User save(User user) {
+        Role userRole = new Role("USER");
+        Set<Role> roles = new HashSet<>();
+        roles.add(userRole);
+        user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.saveAndFlush(user);
+        return userRepository.save(user);
     }
 
     public User update(User user) {
@@ -29,7 +37,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User find(String userName) {
-        return userRepository.findOneByUsername(userName);
+        return userRepository.findOneByEmail(userName);
     }
 
     @Override
@@ -40,6 +48,6 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
 
-        return user;
+        return (UserDetails) user;
     }
 }

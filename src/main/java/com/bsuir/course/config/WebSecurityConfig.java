@@ -1,84 +1,95 @@
 package com.bsuir.course.config;
 
-import com.bsuir.course.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
+import com.bsuir.course.domain.User;
+import com.bsuir.course.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-@Configurable
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+import java.io.IOException;
+
+@Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    UserService userService;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    // This method is used for override HttpSecurity of the web Application.
-    // We can specify our authorization criteria inside this method.
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and()
-                // starts authorizing configurations
-                .authorizeRequests()
-                // ignoring the guest's urls "
-                .antMatchers("/account/**","/address/**","/addressSale/**","/apartmentsSale/**","/apartments/**","/logout").permitAll()
-                // authenticate all remaining URLS
-                .anyRequest().fullyAuthenticated().and()
-                /* "/logout" will log the user out by invalidating the HTTP Session,
-                 * cleaning up any {link rememberMe()} authentication that was configured, */
-                .logout()
-                .permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
+        http.authorizeRequests()
+                .antMatchers("/","/rent/**", "/sale/**", "/login", "/signUp").permitAll()
+                .antMatchers("/account/**", "/add").hasAuthority("USER")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                // .anyRequest().authenticated()
                 .and()
-                // enabling the basic authentication
-                .httpBasic().and()
-                // configuring the session on the server
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-                // disabling the CSRF - Cross Site Request Forgery
-                .csrf().disable();
+                .formLogin().permitAll()
+                .loginPage("/login")
+                //.loginProcessingUrl("/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/personal")
+                .successHandler(new AuthenticationSuccessHandler() {
+
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                                        Authentication authentication) throws IOException, ServletException {
+                        System.out.println("AuthenticationSuccessHandler invoked");
+                        System.out.println("Authentication name: " + authentication.getName());
+
+                        User user = userRepository.findOneByEmail(authentication.getName());
+                        //  User user = userService.getMemberByEmail(authentication.getName());
+                        System.out.println(authentication.getAuthorities());
+
+                        if (!user.isEnabled()) {
+                            if (user.getRoles().toString().equals("[ADMIN]")) {
+                                response.sendRedirect("/admin/personal");
+                            } else if (user.getRoles().toString().equals("[USER]")) {
+                                response.sendRedirect("/account/personal");
+                            }
+                        }else {
+                            response.sendRedirect("/block");
+                        }
+
+
+
+
+                    }
+                })
+                //.defaultSuccessUrl("/list")
+                .and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
     }
 
-    // This method is for overriding the default AuthenticationManagerBuilder.
-    // We can specify how the user details are kept in the application. It may
-    // be in a database, LDAP or in memory.
+
+    private final DataSource dataSource;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(passwordEncoder);
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select email as principal, password as credentails, true from _user where email=?")
+                .authoritiesByUsernameQuery("select _user_email as principal, role_name as role from _user_roles where _user_email=?")
+                .passwordEncoder(passwordEncoder());
     }
 
-    // this configuration allow the client app to access the this api
-    // all the domain that consume this api must be included in the allowed o'rings
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-            //    registry.addMapping("/**").allowedOrigins("http://localhost:4200");
-                registry.addMapping("/**");
+    public PasswordEncoder passwordEncoder() {
+        // TODO Auto-generated method stub
+        return new BCryptPasswordEncoder();
+    }
 
-            }
-        };
-    }
-    // This method is for overriding some configuration of the WebSecurity
-    // If you want to ignore some request or request patterns then you can
-    // specify that inside this method
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
-    }
 }
-

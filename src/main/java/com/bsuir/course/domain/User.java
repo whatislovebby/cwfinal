@@ -11,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,18 +20,12 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="user")
-@Scope("session")
-public class User implements UserDetails {
+@Table(name="_user")
+public class User {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+
+
     private Long id;
-
-    @Column(unique = true)
-    @NotBlank
-    private String username;
-
     @NotBlank
     private String password;
 
@@ -39,35 +35,27 @@ public class User implements UserDetails {
 
     private String phone;
 
+    @Id
+    @Column(unique=true, nullable = false)
     private String email;
+    private String photos;
 
-    @NotBlank
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL) //FetchType.EAGER - роли будут загружаться вместе с пользователем
+    @JoinTable(
+            name = "_user_roles",
+            joinColumns = @JoinColumn(name = "_user_email"),
+            inverseJoinColumns = @JoinColumn(name = "role_name")
+    )
+    private Set<Role> roles = new HashSet<>();
+    @Column
+    private boolean enabled;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role));
-        return authorities;
+    @Transient
+    public String getPhotosImagePath( ) {
+        if(photos == null)
+            return "/img/default-user.png";
+        return "/user-photos/" + this.email + "/" + this.photos;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
