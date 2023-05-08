@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    /* This is the project stylesheet */
+
+    body {
+        margin: 0;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    :root {
+        /* Colors */
+        --black: rgba(0, 0, 0, 1);
+        --dark-slate-gray: rgba(69, 82, 91, 1);
+        --gainsboro: rgba(217, 217, 217, 1);
+        --white: rgba(255, 255, 255, 1);
+
+        /* Typographies */
+        /* roboto-20-bold */
+        --roboto-20-bold-family: "Roboto";
+        --roboto-20-bold-size: 20px;
+        --roboto-20-bold-weight: 700;
+        --roboto-20-bold-line-height: normal;
+
+        /* roboto-20-regular */
+        --roboto-20-regular-family: "Roboto";
+        --roboto-20-regular-size: 20px;
+        --roboto-20-regular-weight: 400;
+        --roboto-20-regular-line-height: normal;
+
+        /* roboto-30-bold */
+        --roboto-30-bold-family: "Roboto";
+        --roboto-30-bold-size: 30px;
+        --roboto-30-bold-weight: 700;
+        --roboto-30-bold-line-height: normal;
+
+        /* roboto-30-regular */
+        --roboto-30-regular-family: "Roboto";
+        --roboto-30-regular-size: 30px;
+        --roboto-30-regular-weight: 400;
+        --roboto-30-regular-line-height: normal;
+    }
+
+    .frame-1 {
+        background-color: var(--white);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .flex-wrapper-one {
+        background-color: var(--gainsboro);
+        margin-bottom: 101px;
+        padding: 21px 120px 22px 90px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .logo {
+        margin-right: 402px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+
+
+    .arenda-by {
+        color: var(--black);
+        margin-top: 22px;
+        font-family: var(--roboto-30-bold-family);
+        font-size: var(--roboto-30-bold-size);
+        font-weight: var(--roboto-30-bold-weight);
+        line-height: var(--roboto-30-bold-line-height);
+    }
+
+    .arenda {
+        color: var(--dark-slate-gray);
+        margin-top: 33px;
+        margin-right: 60px;
+        font-family: var(--roboto-20-regular-family);
+        font-size: var(--roboto-20-regular-size);
+        font-weight: var(--roboto-20-regular-weight);
+        line-height: var(--roboto-20-regular-line-height);
+    }
+
+    .prodazha {
+        color: var(--dark-slate-gray);
+        margin-top: 34px;
+        margin-right: 60px;
+        font-family: var(--roboto-20-regular-family);
+        font-size: var(--roboto-20-regular-size);
+        font-weight: var(--roboto-20-regular-weight);
+        line-height: var(--roboto-20-regular-line-height);
+    }
+
+    .vojti {
+        color: var(--dark-slate-gray);
+        margin-top: 34px;
+        font-family: var(--roboto-20-bold-family);
+        font-size: var(--roboto-20-bold-size);
+        font-weight: var(--roboto-20-bold-weight);
+        line-height: var(--roboto-20-bold-line-height);
+    }
+
+    .group-1 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .num-1-komnatnaja-kvartira-na-ul-brestskaja-1 {
+        width: 708px;
+        color: var(--dark-slate-gray);
+        margin-bottom: 37px;
+        font-family: var(--roboto-30-bold-family);
+        font-size: var(--roboto-30-bold-size);
+        font-weight: var(--roboto-30-bold-weight);
+        line-height: var(--roboto-30-bold-line-height);
+    }
+
+    .flex-wrapper-two {
+        margin-bottom: 55px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .img {
+        width: 68.37%;
+        height: 96.45%;
+        margin-top: 18px;
+        margin-right: 84px;
+    }
+
+    .num-200 {
+        color: var(--black);
+        margin-bottom: 43px;
+        font-family: var(--roboto-30-bold-family);
+        font-size: var(--roboto-30-bold-size);
+        font-weight: var(--roboto-30-bold-weight);
+        line-height: var(--roboto-30-bold-line-height);
+    }
+
+    .kontakty {
+        color: var(--dark-slate-gray);
+        margin-bottom: 25px;
+        font-family: var(--roboto-20-regular-family);
+        font-size: var(--roboto-20-regular-size);
+        font-weight: var(--roboto-20-regular-weight);
+        line-height: var(--roboto-20-regular-line-height);
+    }
+
+    .svjazat-sja-s-vladel-cem {
+        color: var(--dark-slate-gray);
+        text-decoration: underline;
+        font-family: var(--roboto-20-bold-family);
+        font-size: var(--roboto-20-bold-size);
+        font-weight: var(--roboto-20-bold-weight);
+        line-height: var(--roboto-20-bold-line-height);
+    }
+
+    .opisanie {
+        color: var(--dark-slate-gray);
+        margin-bottom: 25px;
+        font-family: var(--roboto-30-bold-family);
+        font-size: var(--roboto-30-bold-size);
+        font-weight: var(--roboto-30-bold-weight);
+        line-height: var(--roboto-30-bold-line-height);
+    }
+
+    .kvartira-polnost-ju-obustroena-i-gotova-d {
+        max-width: 1234px;
+        color: var(--dark-slate-gray);
+        font-family: var(--roboto-30-regular-family);
+        font-size: var(--roboto-30-regular-size);
+        font-weight: var(--roboto-30-regular-weight);
+        line-height: var(--roboto-30-regular-line-height);
+    }
+</style>
+<body>
+
+<div class="frame-1">
+    <div class="flex-wrapper-one">
+        <div class="logo">
+            <img
+                    alt=""
+                    class="combined-shape"
+                    src="https://static.overlay-tech.com/assets/fbc06dfa-8a1f-4ea6-87a9-9b1103a9bc08.svg"
+            />
+            <a th:href="@{/}"><p class="arenda-by">Arenda.by</p></a>
+        </div>
+        <a th:href="@{/rent}"><p class="arenda">Аренда</p></a>
+        <a th:href="@{/sale}"><p class="prodazha">Продажа</p></a>
+        <a th:href="@{/account/add}"><p class="prodazha">Разместить объявление</p></a>
+        <a th:href="@{/admin/personal}"><p class="vojti">Личный кабинет</p></a>
+    </div>
+    <div class="group-1">
+        <p
+           th:text="${apart.getCity()} + ', ' + ${apart.getStreet()} + ', ' + ${apart.getHome()} + ', ' + ${apart.getFlat()} ">
+        </p>
+        <div class="flex-wrapper-two">
+            <img alt="Превью фото" th:src="@{${apart.photosImagePath}}" th:href="'/account/updateFlat/' + ${apart.getId()}" width="600" style="margin-right: 70px;">
+
+            <div class="group-1">
+                <p class="num-200" th:text="${apart.getPrice() + '$'}"></p>
+                <p class="kontakty" th:text="'Имя: ' + ${apart.getUser().getFirstName()}"></p>
+                <p class="kontakty">Контакты:</p>
+                <p class="kontakty" th:text="'Телефон: ' + ${apart.getUser().getPhone()}"></p>
+                <a href="mailto:"><p class="kontakty" th:text="'Написать: ' + ${apart.getUser().getEmail()}"></p></a>
+            </div>
+        </div>
+        <p class="opisanie">Описание:</p>
+        <p class="kvartira-polnost-ju-obustroena-i-gotova-d" th:text="${apart.getDescription()}">
+        </p>
+    </div>
+</div>
+</body>
+</html>
+

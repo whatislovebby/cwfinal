@@ -1,0 +1,142 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<meta charset="UTF-8">
+<style>
+
+
+  body {
+    background: #45525b;
+  }
+  form {
+    width: 60%;
+    margin: 60px auto;
+    background: #efefef;
+    padding: 60px 120px 80px 120px;
+    text-align: center;
+    -webkit-box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+  }
+  label {
+    display: block;
+    position: relative;
+    margin: 40px 0px;
+  }
+  .label-txt {
+    position: absolute;
+    top: -1.6em;
+    padding: 10px;
+    font-family: sans-serif;
+    font-size: .8em;
+    letter-spacing: 1px;
+    color: rgb(120,120,120);
+    transition: ease .3s;
+  }
+  .input {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .line-box {
+    position: relative;
+    width: 100%;
+    height: 2px;
+    background: #BCBCBC;
+  }
+
+  .line {
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #45525b;
+    transition: ease .6s;
+  }
+
+  .input:focus + .line-box .line {
+    width: 100%;
+  }
+
+  .label-active {
+    top: -3em;
+  }
+
+  button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: rgb(220,220,220);
+    font-weight: bold;
+    color: rgb(120,120,120);
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: ease .3s;
+  }
+
+  button:hover {
+    background: #45525b;
+    color: #ffffff;
+  }
+
+</style>
+<section class="form-container">
+<form th:action="@{/SignUp}" method="post">
+  <div class="logo">
+    <img
+            alt=""
+            src="https://static.overlay-tech.com/assets/1f3c4412-c1f8-45a4-a11d-7e779f5d67f5.svg"
+    />
+    <H1> Arenda.by </H1>
+  </div>
+
+  <label for = "firstname">
+    <p class="label-txt">ИМЯ</p>
+    <input type="text" class="input" id="firstname" name="firstname" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])" >
+    <div class="line-box">
+      <div class="line"></div>
+    </div>
+  </label>
+
+  <label for = "lastname">
+    <p class="label-txt">ФАМИЛИЯ</p>
+    <input type="text" class="input"  id="lastname" name="lastname" title="Введите только символы на кириллице"  >
+    <div class="line-box">
+      <div class="line"></div>
+    </div>
+
+    <label for = "email">
+      <p class="label-txt">EMAIL</p>
+      <input type="email" class="input"  id="email" name="email"   >
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+
+      <label for = "password">
+        <p class="label-txt">ПАРОЛЬ</p>
+        <input type="password" class="input"   id="password" name="password"  pattern=".{8,}" title="Введите не менее 8 символов">
+        <div class="line-box">
+          <div class="line"></div>
+        </div>
+
+
+    </label>
+  <button type="submit">Регистрация</button>
+
+  <button th:href="@{/login}">Войти</button>
+</form>
+</section>
+<script type= "text/javascript">
+  let firstname = document.querySelector('#firstname')
+  let regex = /[0-9]/g;
+  firstname._onInput=function () {
+    this.value = this.value. replace(regex, '')
+  }
+
+</script>

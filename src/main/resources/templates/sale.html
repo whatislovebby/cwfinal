@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    /* This is the project stylesheet */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+
+    }
+    body {
+      display: flex;
+      margin: 0;
+      justify-content: center;
+    }
+
+    :root {
+
+      --black: rgba(0, 0, 0, 1);
+      --dark-slate-gray: rgba(69, 82, 91, 1);
+      --gainsboro: rgba(217, 217, 217, 1);
+      --white: rgba(255, 255, 255, 1);
+
+      /* Typographies */
+      /* roboto-20-bold */
+      --roboto-20-bold-family: "Roboto";
+      --roboto-20-bold-size: 20px;
+      --roboto-20-bold-weight: 700;
+      --roboto-20-bold-line-height: normal;
+
+      /* roboto-20-regular */
+      --roboto-20-regular-family: "Roboto";
+      --roboto-20-regular-size: 20px;
+      --roboto-20-regular-weight: 400;
+      --roboto-20-regular-line-height: normal;
+
+      /* roboto-30-bold */
+      --roboto-30-bold-family: "Roboto";
+      --roboto-30-bold-size: 30px;
+      --roboto-30-bold-weight: 700;
+      --roboto-30-bold-line-height: normal;
+    }
+
+    .frame-1 {
+      background-color: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .flex-wrapper-one {
+      background-color: var(--gainsboro);
+      margin-bottom: 60px;
+      padding: 21px 120px 22px 90px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .logo {
+      margin-right: 402px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+
+
+    .arenda-by {
+      color: var(--black);
+      margin-top: 22px;
+      font-family: var(--roboto-30-bold-family);
+      font-size: var(--roboto-30-bold-size);
+      font-weight: var(--roboto-30-bold-weight);
+      line-height: var(--roboto-30-bold-line-height);
+    }
+
+    .arenda {
+      color: var(--dark-slate-gray);
+      margin-top: 33px;
+      margin-right: 60px;
+      font-family: var(--roboto-20-regular-family);
+      font-size: var(--roboto-20-regular-size);
+      font-weight: var(--roboto-20-regular-weight);
+      line-height: var(--roboto-20-regular-line-height);
+    }
+
+    .prodazha {
+      color: var(--dark-slate-gray);
+      margin-top: 34px;
+      margin-right: 60px;
+      font-family: var(--roboto-20-regular-family);
+      font-size: var(--roboto-20-regular-size);
+      font-weight: var(--roboto-20-regular-weight);
+      line-height: var(--roboto-20-regular-line-height);
+    }
+
+    .vojti {
+      color: var(--dark-slate-gray);
+      margin-top: 34px;
+      font-family: var(--roboto-20-bold-family);
+      font-size: var(--roboto-20-bold-size);
+      font-weight: var(--roboto-20-bold-weight);
+      line-height: var(--roboto-20-bold-line-height);
+    }
+
+    /*.br {*/
+    /*    margin-left: 90px;*/
+    /*    display: flex;*/
+    /*    align-items: flex-start;*/
+    /*}*/
+
+    /*.br:not(:last-of-type) {*/
+    /*    margin-bottom: 60.9px;*/
+    /*}*/
+
+    .img {
+      width: 30.33%;
+      align-self: stretch;
+      margin-right: 40.97px;
+      object-fit: cover;
+    }
+
+    .flex-wrapper-two {
+      margin-right: 135px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /*.num-1-komnatnaja-kvartira-na-ul-brestskaja-1 {*/
+    /*    max-width: 604px;*/
+    /*    color: var(--dark-slate-gray);*/
+    /*    margin-bottom: 20px;*/
+    /*    font-family: var(--roboto-30-bold-family);*/
+    /*    font-size: var(--roboto-30-bold-size);*/
+    /*    font-weight: var(--roboto-30-bold-weight);*/
+    /*    line-height: var(--roboto-30-bold-line-height);*/
+    /*}*/
+
+    /*.metallicheskaja-dver-holodil-nik-televizo {*/
+    /*    max-width: 239px;*/
+    /*    color: var(--dark-slate-gray);*/
+    /*    font-family: var(--roboto-20-regular-family);*/
+    /*    font-size: var(--roboto-20-regular-size);*/
+    /*    font-weight: var(--roboto-20-regular-weight);*/
+    /*    line-height: var(--roboto-20-regular-line-height);*/
+    /*}*/
+
+    /*.num-200 {*/
+    /*    color: var(--black);*/
+    /*    margin-top: 10px;*/
+    /*    font-family: var(--roboto-30-bold-family);*/
+    /*    font-size: var(--roboto-30-bold-size);*/
+    /*    font-weight: var(--roboto-30-bold-weight);*/
+    /*    line-height: var(--roboto-30-bold-line-height);*/
+    /*}*/
+
+    /*.num-2-komnatnaja-kvartira-na-ul-lenina-1-mi {*/
+    /*    max-width: 597px;*/
+    /*    color: var(--dark-slate-gray);*/
+    /*    margin-bottom: 20px;*/
+    /*    margin-left: 7px;*/
+    /*    font-family: var(--roboto-30-bold-family);*/
+    /*    font-size: var(--roboto-30-bold-size);*/
+    /*    font-weight: var(--roboto-30-bold-weight);*/
+    /*    line-height: var(--roboto-30-bold-line-height);*/
+    /*}*/
+
+    /*.num-350 {*/
+    /*    color: var(--black);*/
+    /*    font-family: var(--roboto-30-bold-family);*/
+    /*    font-size: var(--roboto-30-bold-size);*/
+    /*    font-weight: var(--roboto-30-bold-weight);*/
+    /*    line-height: var(--roboto-30-bold-line-height);*/
+    /*}*/
+
+    a {
+      text-decoration: none;
+    }
+
+
+
+    input[type="number"] {
+
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      /*padding: 5px;*/
+      margin-right: 5px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      width: 40%;
+    }
+
+    input[type="submit"] {
+
+      background-color: #333;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      /*padding: 5px;*/
+      width: 10%;
+      margin-right: 5px;
+
+
+    }
+
+
+  </style>
+<body>
+<div class="container-md">
+  <div class="flex-wrapper-one position-absolute start-0">
+    <div class="logo">
+      <img
+              alt=""
+              src="https://static.overlay-tech.com/assets/1f3c4412-c1f8-45a4-a11d-7e779f5d67f5.svg"
+      />
+      <a th:href="@{/}"><p class="arenda-by">Arenda.by</p></a>
+    </div>
+    <a th:href="@{/rent}"><p class="arenda">Аренда</p></a>
+    <a th:href="@{/sale}"><p class="prodazha" style="color: #252525; font-weight: bold">Продажа</p></a>
+    <a th:href="@{/account/add}"><p class="prodazha">Разместить объявление</p></a>
+    <a th:href="@{/account/personal}"><p class="prodazha">Личный кабинет</p></a>
+  </div>
+
+  <div style="margin-top: 160px">
+    <h1 class="m-5 text-center">Покупка квартир</h1>
+    <form th:action="@{/account/filtr/{page}(page=sale)}" method="get" class="row mb-3">
+      <input type="number" id="n" name="min" class="form-control w-auto p-2 h-25" required placeholder="Введите мин. цену">
+      <input type="number" id="n1" name="max" class="form-control w-auto p-2 h-25"  required placeholder="Введите макс. цену">
+      <input type="text" name="spisok" value="PR" hidden>
+      <input type="submit" value="Поиск" class="btn btn-dark mt-0 m-3" />
+    </form>
+  </div>
+  <p>
+  </p>
+  <div class="br" th:each="apart:${aparts}">
+    <a style="display:flex;" th:href="'/sale/'+${apart.getId()}">
+      <img alt="Превью фото" th:src="@{${apart.photosImagePath}}" class="img"/>
+      <div class="flex-wrapper-two">
+        <p th:text="${apart.getCity()} + ', ' + ${apart.getStreet()} + ', ' + ${apart.getHome()} + ', ' + ${apart.getFlat()} "></p>
+        <p th:text="${apart.getDescription()}">
+        </p>
+      </div>
+      <p class="num-200" th:text="${apart.getPrice()} + '$'"></p>
+    </a>
+  </div>
+</div>
+</body>
+</html>
